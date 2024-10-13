@@ -23,14 +23,30 @@ for filename in glob.glob('raw_images/*.jpg'):
         }
     )
 
-    # uncomment this to see the format of the reponse
-    # print(json.dumps(response, indent=2))
+    for block in response["Blocks"]:
+        if block["BlockType"] == "QUERY":
+            query_alias = block["Query"]["Alias"]
+            answer_id = next(rel["Ids"] for rel in block["Relationships"] if rel['Type'] == "ANSWER")[0]
+            answer_text = next(b for b in response["Blocks"] if b["Id"] == answer_id)["Text"]   
+            csv_row[query_alias] = answer_text
+            print(f"{query_alias}: {answer_text}")
+
+ 
+
+
+
+
+
+
+
+
+    #print(json.dumps(response, indent=2))
 
     #####
     # Replace this code with a solution to populate a dictionary with the results from textract
     #####
-    csv_row["ResponseId"] = "Sample-123"
-    csv_row["Notes"] = "Sample-I liked the movie."
+    csv_row["ResponseId"] = response["RsponseId"]
+    csv_row["Notes"] = response["Notes"]
     csv_array.append(csv_row)
 
 writer = csv.DictWriter(sys.stdout, fieldnames=["ResponseId", "Notes"], dialect='excel')

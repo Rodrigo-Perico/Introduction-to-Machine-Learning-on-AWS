@@ -5,7 +5,6 @@ from random import choice
 
 re_sentence = """(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s"""  
 
-
 with open("transcribe.json") as file:
     transcribe = json.load(file)
 

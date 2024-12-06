@@ -3,7 +3,8 @@ import re
 import boto3
 from random import choice
 
-re_sentence = """(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s"""
+re_sentence = """(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s"""  
+
 
 with open("transcribe.json") as file:
     transcribe = json.load(file)
